@@ -1,9 +1,8 @@
 import requests
-import datetime
+import os
 from flight_data import FlightData
 
-# API_KEY = "HTLrpNsF39fVPqsAM1joLCS0N00G5G_0" #gwakaflight
-API_KEY = "CDEPiegHCIhU3UArstEnyLY14185qu8R" #gwakatest
+kiwi_api_key = os.environ.get("KIWI_API_KEY")
 flights_search_endpoint = "https://tequila-api.kiwi.com"
 CURR = "USD"
 FLIGHT_TYPE = "round"
@@ -13,19 +12,14 @@ NIGHTS_IN_DST_TO = 15
 
 
 class FlightSearch:
-    #This class is responsible for talking to the Flight Search API.
     def getIataCode(self,city_name):
         location_endpoint = f"{flights_search_endpoint}/locations/query"
-        headers = {"apikey": API_KEY,}
+        headers = {"apikey": kiwi_api_key,}
         query = {"term": city_name}
         response = requests.get(url=location_endpoint,headers=headers,params=query)
         response.raise_for_status()
         iataCode = response.json()["locations"][0]["code"]
         return iataCode
-
-    # date_from = datetime.strptime("04/04/2023", "%d/%m/%Y")
-    # date_to = datetime.strptime("12/04/2023", "%d/%m/%Y")
-    # print(date_from.strftime("%d/%m/%Y"))
 
     def findPrice(self,origin_city_iataCode, destination_city_iataCode, date_from, date_to):
         search_endpoint = f"{flights_search_endpoint}/v2/search"
@@ -60,7 +54,6 @@ class FlightSearch:
         )
         print(f"{flight_data.origin_city}->{flight_data.destination_city}: ${flight_data.price} on {flight_data.departure_date}")
         return flight_data
-        # return response.json()
 
 
 

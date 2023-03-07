@@ -30,4 +30,4 @@ class DataManager:
                 }
             }
             r = requests.put(url=f"{sheeety_endpoint}/{record['id']}", headers=sheety_headers, json=record_update)
-            # print(r.text)
+            r.raise_for_status()
