@@ -23,7 +23,7 @@ class FlightSearch:
 
     def findPrice(self,origin_city_iataCode, destination_city_iataCode, date_from, date_to):
         search_endpoint = f"{flights_search_endpoint}/v2/search"
-        headers = {"apikey": API_KEY,}
+        headers = {"apikey": kiwi_api_key,}
         # query = {
         #     "fly_from": origin_city,
         #     "fly_to": iataCode,

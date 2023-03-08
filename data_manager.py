@@ -19,6 +19,7 @@ class DataManager:
 
     def getData(self):
         response = requests.get(url=sheeety_endpoint, headers=sheety_headers)
+        response.raise_for_status()
         self.sheety_data = response.json()['prices']
         return self.sheety_data
 
